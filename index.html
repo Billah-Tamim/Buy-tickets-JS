@@ -35,7 +35,7 @@
         </div>
 
 
-        <div class="booking-form">
+        <div id="delet" class="booking-form">
             <h3>Book Ocean Time</h3>
             <div class="input-group">
                 <label for="">Flying From</label>
@@ -58,20 +58,22 @@
             <div class="input-group f-class">
                 <div>
                     <label for="">First Class ($150)</label>
-                    <input class="inp-style inp-width" type="number" name="">
+                    <input id="first-quantity" class="inp-style inp-width" type="number" name="" value="1">
                 </div>
                 <div class="plus-minus-btn">
-                    <p>+ -</p>
+                    <button id="first-plus"><b>+</b></button>
+                    <button id="first-minus"><b>-</b></button>
                 </div>
             </div>
             
             <div class="input-group f-class">
                 <div>
                     <label for="">Economy ($100)</label>
-                    <input class="inp-style inp-width" type="number" name="">
+                    <input id="economy-quantity" class="inp-style inp-width" type="number" name="" value="1">
                 </div>
                 <div class="plus-minus-btn">
-                    <p> <span>+</span> <span>-</span> </p>
+                    <button id="economy-plus"><b>+</b></button>
+                    <button id="economy-minus"><b>-</b></button>
                 </div>
             </div>
             <div class="calculations">
@@ -80,7 +82,7 @@
                         <p>Subtotal</p>
                     </div>
                     <div class="right">
-                        <p>$500</p>
+                        <p id="sub-total">$250</p>
                     </div>
                 </div>
 
@@ -89,7 +91,7 @@
                         <p>Charge 10% VAT</p>
                     </div>
                     <div class="right">
-                        <p>$50</p>
+                        <p id="vat">$25</p>
                     </div>
                 </div>
                 <hr>
@@ -98,15 +100,103 @@
                         <h4>Total</h4>
                     </div>
                     <div class="right">
-                        <p>$550</p>
+                        <p id="total">$275</p>
                     </div>
                 </div>
             </div>
-            <button class="btn-style">Book Now</button>
+            <button id="confirm" class="btn-style">Book Now</button>
+        </div>
+        <div id="after-confirm">
+            <h1 style="font-size: 70px;">CONGRATULATION</h1>
+            <h4 style="font-size: 50px;">You booked <span id="first"></span> ticket on First Class and
+            <span id="economy"></span> ticket on Economy</h4>
         </div>
     </main>
 
     <!--Thank You-->
+    <script>
+        //first class section
+        const firstPlus = document.getElementById('first-plus');
+        firstPlus.addEventListener('click', function(){
+            firstChange(1);
+        })
+        const firstMinus = document.getElementById('first-minus');
+        firstMinus.addEventListener('click', function(){
+            firstChange(-1);
+        })
+        function firstChange(n){
+            const firstQuantity = document.getElementById('first-quantity').value;
+            const firstQuantityNumber = parseFloat(firstQuantity);
+            let firstNew = 0;
+            if(firstQuantityNumber>=1 && n == -1){
+                firstNew = firstQuantityNumber + n;
+            }
+            if(firstQuantityNumber>=0 && n == 1){
+                firstNew = firstQuantityNumber + n;
+            }
+            document.getElementById('first-quantity').value = firstNew;
+
+            let firstTotal = firstNew * 150;
+            const economyQuantity = document.getElementById('economy-quantity').value;
+            const economyQuantityNumber = parseFloat(economyQuantity);
+            let economyTotal = economyQuantityNumber * 100;
+            const subTotal = firstTotal + economyTotal;
+            document.getElementById('sub-total').innerText = '$' + subTotal;
+            let vat = (subTotal/10);
+            document.getElementById('vat').innerText = '$' + vat;
+            let total = subTotal + vat;
+            document.getElementById('total').innerText = '$'+ total;
+
+        }
+        function firstCalculation(){
+
+        }
+
+        //economy section
+        const economyPlus = document.getElementById('economy-plus');
+        economyPlus.addEventListener('click', function(){
+            economyChange(1);
+        })
+        const economyMinus = document.getElementById('economy-minus');
+        economyMinus.addEventListener('click', function(){
+            economyChange(-1);
+        })
+        function economyChange(n){
+            const economyQuantity = document.getElementById('economy-quantity').value;
+            const economyQuantityNumber = parseFloat(economyQuantity);
+            let economyNew = 0;
+            if(economyQuantityNumber>=1 && n == -1){
+                economyNew = economyQuantityNumber + n;
+            }
+            if(economyQuantityNumber>=0 && n == 1){
+                economyNew = economyQuantityNumber + n;
+            }
+            document.getElementById('economy-quantity').value = economyNew;
+
+            let economyTotal = economyNew * 100;
+            const firstQuantity = document.getElementById('first-quantity').value;
+            const firstQuantityNumber = parseFloat(firstQuantity);
+            let firstTotal = firstQuantityNumber * 150;
+            const subTotal = firstTotal + economyTotal;
+            document.getElementById('sub-total').innerText = '$' + subTotal;
+            let vat = (subTotal/10);
+            document.getElementById('vat').innerText = '$' + vat;
+            let total = subTotal + vat;
+            document.getElementById('total').innerText = '$'+ total;
+        }
+
+        //book now button
+        document.getElementById('confirm').addEventListener('click', function(){
+            document.getElementById('delet').style.display = 'none';
+            document.getElementById('after-confirm').style.display = 'block';
+            const economyQuantity = document.getElementById('economy-quantity').value;
+            const economyQuantityNumber = parseFloat(economyQuantity);
+            const firstQuantity = document.getElementById('first-quantity').value;
+            const firstQuantityNumber = parseFloat(firstQuantity);
+            document.getElementById('first').innerText = firstQuantityNumber;
+            document.getElementById('economy').innerText = economyQuantityNumber;
+        })
+    </script>
 </body>
 
 </html>

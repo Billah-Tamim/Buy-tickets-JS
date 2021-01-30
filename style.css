@@ -122,3 +122,11 @@ nav ul li a:hover, a.active{
     display: flex;
     justify-content: space-between;
 }
+#after-confirm{
+    display: none;
+    color: rgb(251, 255, 0);
+    border: 5px solid white;
+    border-radius: 10px;
+    height: 500px;
+    padding: 100px;
+}
